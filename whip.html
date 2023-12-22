@@ -1,0 +1,880 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<link rel="stylesheet" href="./lineawesome/css/line-awesome.min.css" />
+	<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon" />
+	<link id="favicon1" rel="icon" type="image/png" sizes="32x32" href="./media/favicon-32x32.png" />
+	<link id="favicon2" rel="icon" type="image/png" sizes="16x16" href="./media/favicon-16x16.png" />
+	<link id="favicon3" rel="icon" href="./media/favicon.ico" />
+	<style>
+	html {
+		border:0;
+		margin:0;
+		outline:0;
+		overflow: hidden;
+	}
+
+	video {
+
+		margin: 0;
+		padding: 0;
+		overflow: hidden;
+		cursor: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=), none;
+		user-select: none;
+		
+	}
+	body {
+		padding: 0 0px;
+		height: 100%;
+		width: 100%;
+		background-color: -webkit-linear-gradient(to top, #363644, 50%, #151b29);  /* Chrome 10-25, Safari 5.1-6 */
+		background: linear-gradient(to top, #363644, 50%, #151b29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+		font-size: 2em;
+		font-family: Helvetica, Arial, sans-serif;
+		display: flex;
+		flex-flow: column;
+		border:0;
+		margin:0;
+		outline:0;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	#moreinfo {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		margin: 2em;
+		color:white;
+		transform:scale(120%);
+	}
+	a {
+		color:white;
+	}
+	button.glyphicon-button:focus,
+	button.glyphicon-button:active:focus,
+	button.glyphicon-button.active:focus,
+	button.glyphicon-button.focus,
+	button.glyphicon-button:active.focus,
+	button.glyphicon-button.active.focus {
+	  outline: none !important;
+	}
+
+	.gobutton {
+		font-size:14px;
+		font-weight: bold;
+		border: none;
+		background: #6aab23;
+		display: flex;
+		border-radius: 0px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		box-shadow: 0 12px 15px -10px #5ca70b, 0 2px 0px #6aab23;
+		color: white;
+		cursor: pointer;
+		box-sizing: border-box;
+		align-items: center;
+		padding: 0 1em;
+		min-width: 50px;
+	}
+	.details{
+		font-size: 14px;
+		font-weight: bold;
+		border: none;
+		background: #555;
+		display: flex;
+		border-radius: 0px;
+		border-top-right-radius: 10px;
+		border-bottom-right-radius: 10px;
+		box-shadow: 0 12px 15px -10px #444, 0 2px 0px #555;
+		color: white;
+		box-sizing: border-box;
+		align-items: center;
+		padding: 0 1em;
+		min-width: 50px;
+	}
+	#header{
+		width:100%;
+		background-color: #101520;
+	}
+	.changeText {
+		font-size: 1em;
+		align-self: center;
+		width: 100%;
+		padding: 1em;
+		font-weight: bold;
+		background: white;
+		border: 4px solid white;
+		box-shadow: 0px 30px 40px -32px #6aab23, 0 2px 0px #6aab23;
+		border-top-left-radius: 10px;
+		border-bottom-left-radius: 10px;
+		transition: all 0.2s linear;
+		box-sizing: border-box;
+		border-bottom-right-radius: 0;
+		border-top-right-radius: 0;
+	}
+
+	.changeText:focus {
+		outline: none;
+	}
+	select.changetext{
+		padding: .1em;
+	}
+
+	.container{
+		font-size: 16px;
+		align-self:center;
+		max-width: 100%;
+		width: 720px;
+		margin: auto auto;
+	}
+	label {
+		font: white;
+		font-size: 1em;
+		color: white;
+	}
+	input[type='checkbox'] {
+		-webkit-appearance:none;
+		width:30px;
+		height:30px;
+		background:white;
+		border-radius:5px;
+		border:2px solid #555;
+		cursor: pointer;
+	}
+	input[type='checkbox']:checked {
+		background: #1A1;
+	}
+	#audioOutput, #lastUrls {
+		font-size: calc(16px + 0.3vw);
+		width: 730px;
+		height: 100%;
+		flex: 20;
+		border-radius: 10px;
+		padding: 1em;
+		background: #eaeaea;
+		cursor:pointer;
+	}
+	label[for="audioOutput"] {
+		font-size: 3em;
+		color: #FE53BB;
+		text-shadow: 0px 0px 30px #fe53bb;
+		padding-right: 10px;
+	}
+	label[for="changeText"] {
+		font-size: 3em;
+		color: #00F6FF;
+		text-shadow: 0px 0px 30px #00f6ff;
+		padding-top: 5px;
+		padding-right: 10px;
+	}
+
+	label[for="lastUrls"] {
+	font-size: 3em;
+		color: #1a1;
+		text-shadow: 0px 0px 30px #1a1;
+		padding-right: 10px;
+		cursor: pointer;
+	}
+
+	div#audioOutputContainer, #history {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		justify-content: center;
+		margin: 2em;
+	}
+		
+	@media only screen and (max-width: 1030px) {
+		body{
+			zoom: 0.9; 
+			-moz-transform: scale(0.9); 
+			-moz-transform-origin: 0 0;
+		}
+	}
+
+	#messageDiv {
+		font-size: .7em;
+		color: #DDD;
+		transition: all 0.5s linear;
+		font-style: italic;
+		opacity: 0;
+		text-align: center;
+		margin: 10px 0;
+	}
+
+	div.urlInput {
+		padding: 0 0 1vh 0;
+	}
+	
+	@media only screen and (max-height: 639px) {
+		div.urlInput {
+		}
+		div#audioOutputContainer, #history {
+			margin: 1em;
+		}
+	}
+	
+	@media only screen and (max-width: 767px) {
+		
+		div.urlInput {
+		}
+		div#audioOutputContainer, #history {
+			margin:  2em 1em;
+		}
+	}
+	
+	
+	@media only screen and (max-height: 380px) {
+		div.urlInput {
+		}
+		div#audioOutputContainer, #history {
+			margin: 1em;
+		}
+	}
+	
+	
+
+	label[for="audioOutput"], label[for="lastUrls"] {
+		font-size: 3em;
+	}
+
+	#warning4mac, #electronVersion {
+		background: #8500f7;
+		box-shadow: 0px 0px 50px 10px #8500f7ab, inset 0px 0px 10px 2px #8d08ffba;
+		border: 2px solid #8500f7;
+		border-radius: 10px;
+		width: 90%;
+		padding:1em;
+		margin:0 auto;
+		color:white;
+		font-size:1.3em;
+		margin-bottom: 20px;
+	}
+
+	#warning4mac a, #electronVersion a {
+		color:white;
+	 }
+
+	 ul#lastUrls {
+		list-style: none;
+		background: #101520;
+		color: white;
+		padding: 1em;
+	}
+
+	ul#lastUrls li {
+		padding: 5px 0px;
+	}
+	ul#lastUrls li:nth-child(even) {
+		background-color: #182031;
+	}
+
+	.inputCombo {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		flex-grow: 1;
+	}
+	#version{
+		margin: 0 auto;
+		font-size: 30%;
+		display: inline-block;
+		color: #000A;
+	}
+	h3 {
+		color: #b0e3ff;
+	}
+	.hidden{
+		display:none;
+		opacity:0;
+		visibility:none;
+		width:0;
+		height:0
+	}
+	
+
+	</style>
+</head>
+<body>
+	<div id="header" style="-webkit-app-region: drag; color:#6f6f6f;font-size:20px; line-height: 20px; padding: 5px 10px; letter-spacing: 3; font-weight: bold;">WHIP / WHEP simple sample setup</div>
+	
+		<div class="container">
+				<div id="urlInput1" class="urlInput" title="Put the link you want to load here">
+					
+					<h3>Publish a video from VDO.Ninja to a WHIP ingestion end-point</h3>
+					
+					<div  class="inputCombo" id="inputCombo1">
+						<label for="changeText">
+							<i class="las la-upload"></i>
+						</label>
+						<input type="text" id="changeText1" class="inputfield changeText" placeholder="WHIP Publishing URL" />
+						<button  onclick="gohere1();" class="gobutton" id="gobutton1">GO</button>
+					</div>
+					<div >
+						<div class="inputCombo" style="margin: 10px 0px 10px 10px;">
+							<input type="password" id="changeText1a" class="inputfield changeText" placeholder="🗝️ Authentication Bearer Token (optional)" />
+							<div class="details">⚙️</div>
+						</div>
+						
+						<div class="inputCombo" id="advanced" style="margin: 10px 0px 10px 10px;">
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="whipoutaudiobitrate"  title="Which audio bitrate target would you prefer? 128-kbps is fine for music." >
+								<option value="0" selected>🎙️Default Audio Bitrate</option>
+								<option value="32">🎙️32-kbps</option>
+								<option value="64">🎙️64-kbps</option>
+								<option value="128">🎙️128-kbps</option>
+								<option value="256">🎙️256-kbps</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="vbrcbr"  title="Whether the audio bitrate with be constant or variable" >
+								<option value="cbr" selected>🎙️CBR</option>
+								<option value="vbr">🎙️VBR</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="denoise" onchange="checkStereo()" title="Turn off to improve clarity, but you'll hear any background noise" >
+								<option value="0" selected>🎙️Denoise Off</option>
+								<option value="1">🎙️Denoise On</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="autogain" onchange="checkStereo()" title="Auto-controls the input volume; turn off to manage that yourself." >
+								<option value="0" selected>🎙️Auto Gain Off</option>
+								<option value="1">🎙️Auto Gain On</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="stereo"  title="Stereo is available only if auto-gain and noise-reduction is off." >
+								<option value="1" selected>🎙️Stereo</option>
+								<option value="0">🎙️Mono</option>
+							</select >
+						</div>
+						<div class="inputCombo" id="advanced2" style="margin: 10px 0px 10px 10px;">
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="bitrateGroupFlag" title="Which video bitrate target would you prefer?" >
+								<option value="0" selected>🎦Default Video Bitrate</option>
+								<option value="500">🎦500-kbps</option>
+								<option value="2500">🎦2500-kbps</option>
+								<option value="6000">🎦6000-kbps</option>
+								<option value="20000">🎦20000-kbps</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText"  id="codecGroupFlag" onchange="updateSVC();" title="Which video codec would you prefer to be used if available?" >
+								<option value="default" selected>🎦OpenH264</option>
+								<option id="av1codec" value="av1">🎦AV1</option>
+								<option value="vp9">🎦VP9</option>
+								<option value="vp8">🎦VP8</option>
+								<option value="h264">🎦H264</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="svcGroupFlag" title="Which scalable video coding do you want to use?" >
+								<option value="0" selected>🎦 SVC Off</option>
+							</select >
+							<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="e2eeGroupFlag1" title="E2EE uses insertable streams; not everthing supports this" >
+								<option value="0" selected>🔑 E2EE Off</option>
+								<option value="1">🔑 E2EE On</option>
+							</select >
+						</div>
+					</div>	
+				</div>
+				<br />
+				<div id="urlInput1a" class="urlInput" title="Put the link you want to load here">
+					
+					<h3>Publish a video from VDO.Ninja to your Twitch channel</h3>
+					
+					<div  class="inputCombo" id="inputCombo1t">
+						<label for="changeText">
+							<i class="las la-upload"></i>
+						</label>
+						<input type="password" id="changeText1t" autocomplete="changeText1twitcha"  class="inputfield changeText" placeholder="Enter your Twitch stream token here" />
+						<button  onclick="gohere1t();" class="gobutton" id="gobutton1t">GO</button>
+					</div>
+					<div class="hidden">
+						<div class="inputCombo" style="margin: 10px 0px 10px 10px;" autocomplete="changeText1twitchb"  title="If you want to have viewers of this VDO.Ninja link auto-load your Twitch stream">
+							<input type="text" class="inputfield changeText" placeholder="Twitch user name (optional)" />
+							<div class="details">📻</div>
+						</div>
+					</div>
+				</div>
+				<br /><br /><br />
+				<div id="urlInput2"  class="urlInput"title="Put the WHIP token you want to listen for">
+					
+					<h3>Setup VDO.Ninja to be a WHIP-ingestion end-point (ie: OBS -> VDO)</h3>
+					
+					<div class="inputCombo" id="inputCombo2">
+						<label for="changeText">
+						<i class="las la-play"></i>
+					</label>
+						<input type="text" id="changeText2" class="inputfield changeText" placeholder="Ingest WHIP token" />
+						<button  onclick="gohere2();"  class="gobutton" id="gobutton2">GO</button>
+					</div>
+					<h3 style="text-align: center;color:#ccc;"><i>The WHIP endpoint for VDO.Ninja is <b>https://whip.vdo.ninja</b></i></h3>
+				</div>
+				
+				<div id="urlInput3"  class="urlInput"title="Put the link you want to play here">
+					
+					<h3>Play a remote video stream available via WHEP</h3>
+					
+					<div  class="inputCombo" id="inputCombo3">
+						<label for="changeText">
+						<i class="las la-play"></i>
+						</label>
+						<input type="text" id="changeText3" class="inputfield changeText"  placeholder="WHEP Play URL" />
+						<button  onclick="gohere3();"  class="gobutton" id="gobutton3">GO</button>
+					</div>
+					<div class="inputCombo" style="margin: 10px 0px 10px 10px;">
+						<input type="password" id="changeText3a" class="inputfield changeText" placeholder="🗝️ Authentication Bearer Token (optional)" />
+						<div class="details">⚙️</div>
+					</div>
+					<div class="inputCombo" id="advancedwhep" style="margin: 10px 0px 10px 10px;">
+						<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="whepbuffer"  title="Adding a playback buffer can help reduce frame loss or jitter" >
+							<option value="0" selected>⌛No added playback buffer</option>
+							<option value="500">⌛500-ms added</option>
+							<option value="1000">⌛1000-ms added</option>
+							<option value="2000">⌛2000-ms added</option>
+							<option value="3000">⌛3000-ms added</option>
+						</select >
+						<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="whepicewait"  title="Adding a playback buffer can help reduce frame loss or jitter" >
+							<option value="0">⌛Do not wait for ICE candidates</option>
+							<option value="500">⌛Wait 500-ms for ICE candidates</option>
+							<option value="1000">⌛Wait 1000-ms for ICE candidates</option>
+							<option value="2000" selected>⌛Wait 2000-ms for ICE candidates</option>
+							<option value="5000">⌛Wait 5000-ms for ICE candidates</option>
+						</select >
+						<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="e2eeGroupFlag2" title="E2EE uses insertable streams; not everthing supports this" >
+							<option value="0" selected>🔑 E2EE Off</option>
+							<option value="1">🔑 E2EE On</option>
+						</select >
+					</div>
+					<div class="inputCombo" id="advanced3" style="margin: 10px 0px 10px 10px;">
+						<select style="border-radius:10px;margin-right:5px;width:unset!important;" class="changeText" id="stereowhep"  title="Stereo is available only if auto-gain and noise-reduction is off." >
+							<option value="1" selected>🎙️Stereo</option>
+							<option value="0">🎙️Mono</option>
+						</select>
+					</div>
+				</div>
+				<br /><br />
+				<div id="urlInput4" class="urlInput" title="Start a VDO.Ninja stream, and then after, access it remotely via WHEP">
+					
+					<h3>Host a VDO.Ninja stream as a WHEP source</h3>
+					
+					<div  class="inputCombo" id="inputCombo4">
+						<label for="changeText">
+							<i class="las la-broadcast-tower"></i>
+						</label>
+						<input type="text" id="changeText4" class="inputfield changeText"  oninput="change4()" onchange="change4()" placeholder="The WHEP Token you wish to use goes here" />
+						<button  onclick="gohere4();"  class="gobutton" id="gobutton4"  onclick="gohere4();" >GO</button>
+						
+					</div>
+					<h3 style="text-align: center;color:#ccc;"><i>The WHEP endpoint for this is <a href='' id="whepoutsrc" target="_blank">https://whep.vdo.ninja/<span id='whepoutid'>WHEP_TOKEN_HERE</span></a></i></h3>
+				</div>
+				
+				<div id="history" title="History of past links used. You can clear this history using the button to the left">
+					<h3 style='cursor:pointer;' onclick="resetHistory()">Clear History</h3>
+					<label for="lastUrls" onclick="resetHistory()">
+						<i class="las la-history"></i>
+					</label>
+				</div>
+				<br />
+				<div id="moreinfo">
+					<h3 style='cursor:pointer;'>More information and options</h3>
+					For more WHIP/WHEP options, tools, services, and documentation, please see: <a href='https://docs.vdo.ninja/steves-helper-apps/whip-and-whep-tooling' target="_blank"><br /><br />
+					<b>https://docs.vdo.ninja/steves-helper-apps/whip-and-whep-tooling</b></a>
+					<br />
+					<h3 style='cursor:pointer;'>For community support</h3>
+					For support, join our <a href='https://discord.vdo.ninja' target="_blank">Discord server here</a>.
+				</div>
+				<br /><br /><br /><br />
+				
+		</div>
+<script>
+
+var domain = "./";
+
+document.querySelector("#changeText1").value = localStorage.getItem('changeText1') || "";
+document.querySelector("#changeText1t").value = localStorage.getItem('changeText1t') || "";
+document.querySelector("#changeText1a").value = localStorage.getItem('changeText1a') || "";
+document.querySelector("#changeText2").value = localStorage.getItem('changeText2') || "";
+
+
+if (localStorage.getItem('changeText3')!==null){
+	document.getElementById('changeText3').value = localStorage.getItem('changeText3');
+}
+if (localStorage.getItem('changeText3a')!==null){
+	document.getElementById('changeText3a').value = localStorage.getItem('changeText3a');
+}
+
+if (localStorage.getItem('whepbuffer')!==null){
+	document.getElementById('whepbuffer').value = localStorage.getItem('whepbuffer');
+}
+if (localStorage.getItem('whepicewait')!==null){
+	document.getElementById('whepicewait').value = localStorage.getItem('whepicewait');
+}
+if (localStorage.getItem('bitrateGroupFlag')!==null){
+	document.getElementById('bitrateGroupFlag').value = localStorage.getItem('bitrateGroupFlag');
+}
+if (localStorage.getItem('codecGroupFlag')!==null){
+	document.getElementById('codecGroupFlag').value = localStorage.getItem('codecGroupFlag');
+}
+if (localStorage.getItem('svcGroupFlag')!==null){
+	document.getElementById('svcGroupFlag').value = localStorage.getItem('svcGroupFlag');
+}
+if (localStorage.getItem('whipoutaudiobitrate')!==null){
+	document.getElementById('whipoutaudiobitrate').value = localStorage.getItem('whipoutaudiobitrate');
+}
+if (localStorage.getItem('vbrcbr')!==null){
+	document.getElementById('vbrcbr').value = localStorage.getItem('vbrcbr');
+}
+if (localStorage.getItem('autogain')!==null){
+	document.getElementById('autogain').value = localStorage.getItem('autogain');
+}
+if (localStorage.getItem('stereo')!==null){
+	document.getElementById('stereo').value = localStorage.getItem('stereo');
+}
+if (localStorage.getItem('denoise')!==null){
+	document.getElementById('denoise').value = localStorage.getItem('denoise');
+}
+
+if (localStorage.getItem('e2eeGroupFlag1')!==null){
+	document.getElementById('e2eeGroupFlag1').value = localStorage.getItem('e2eeGroupFlag1');
+}
+if (localStorage.getItem('e2eeGroupFlag2')!==null){
+	document.getElementById('e2eeGroupFlag2').value = localStorage.getItem('e2eeGroupFlag2');
+}
+
+if (localStorage.getItem('stereowhep')!==null){
+	document.getElementById('stereowhep').value = localStorage.getItem('stereowhep');
+}
+
+const scalabilityModes = [
+	'L1T1',
+	'L1T2',
+	'L1T3',
+	'L2T1',
+	'L2T2',
+	'L2T3',
+	'L3T1',
+	'L3T2',
+	'L3T3',
+	'L2T1h',
+	'L2T2h',
+	'L2T3h',
+	'S2T1',
+	'S2T2',
+	'S2T3',
+	'S2T1h',
+	'S2T2h',
+	'S2T3h',
+	'S3T1',
+	'S3T2',
+	'S3T3',
+	'S3T1h',
+	'S3T2h',
+	'S3T3h',
+	'L2T2_KEY',
+	'L2T3_KEY',
+	'L3T2_KEY',
+	'L3T3_KEY'
+];
+
+
+function gohere1(){
+	if (document.getElementById('changeText1').value){
+	
+		if (document.getElementById('changeText1').value.startsWith("http://")){
+			document.getElementById('changeText1').value = document.getElementById('changeText1').value.replace("http://","https://");
+		}
+		
+		localStorage.setItem('changeText1', document.getElementById('changeText1').value);
+		localStorage.setItem('changeText1a', document.getElementById('changeText1a').value || "");
+		
+		localStorage.setItem('bitrateGroupFlag', document.getElementById('bitrateGroupFlag').value);
+		localStorage.setItem('codecGroupFlag', document.getElementById('codecGroupFlag').value);
+		localStorage.setItem('svcGroupFlag', document.getElementById('svcGroupFlag').value);
+		
+		localStorage.setItem('whipoutaudiobitrate', document.getElementById('whipoutaudiobitrate').value);
+		localStorage.setItem('vbrcbr', document.getElementById('vbrcbr').value);
+		localStorage.setItem('autogain', document.getElementById('autogain').value);
+		localStorage.setItem('stereo', document.getElementById('stereo').value);
+		localStorage.setItem('denoise', document.getElementById('denoise').value);
+		
+		localStorage.setItem('e2eeGroupFlag1', document.getElementById('e2eeGroupFlag1').value);
+		
+		var whipoutaudiobitrate = "";
+		if (parseInt(document.getElementById('whipoutaudiobitrate').value)){
+			whipoutaudiobitrate = "&whipoutaudiobitrate="+document.getElementById('whipoutaudiobitrate').value;
+		}
+		
+		var vbrcbr = "&"+document.getElementById('vbrcbr').value;
+		var autogain = "&autogain="+document.getElementById('autogain').value;
+		
+		var stereo = "&stereo="+document.getElementById('stereo').value;
+		
+		var denoise = "&denoise="+document.getElementById('denoise').value;
+		
+		
+		var bitrate = "";
+		if (parseInt(document.getElementById('bitrateGroupFlag').value)){
+			bitrate = "&whipoutvideobitrate="+document.getElementById('bitrateGroupFlag').value;
+		}
+		var codec = "";
+		if (document.getElementById('codecGroupFlag').value!=="default"){
+			codec = "&whipoutcodec="+document.getElementById('codecGroupFlag').value;
+		}
+		var svc = "";
+		if (document.getElementById('svcGroupFlag').value!=="0"){
+			svc = "&svc="+document.getElementById('svcGroupFlag').value;
+		}
+		
+		var e2ee = "";
+		if (document.getElementById('e2eeGroupFlag1').value!=="0"){
+			e2ee = "&e2ee&password";
+		}
+		
+		if (document.getElementById('changeText1a').value){
+			window.location = domain + "?push&whippush=" + encodeURIComponent(document.getElementById('changeText1').value) + "&whippushtoken=" + document.getElementById('changeText1a').value + codec + bitrate+whipoutaudiobitrate+vbrcbr+autogain+stereo+denoise+svc+e2ee;
+		} else {
+			window.location = domain + "?push&whippush=" + encodeURIComponent(document.getElementById('changeText1').value) + codec + bitrate+whipoutaudiobitrate+vbrcbr+autogain+stereo+denoise+svc+e2ee;
+		}
+	}
+}
+
+function checkStereo(){
+	if (parseInt(document.getElementById('autogain').value) || parseInt(document.getElementById('denoise').value)){
+		document.getElementById('stereo').disabled = true;
+		document.getElementById('stereo').title = "Noise reduction and auto-gain will prevent stereo audio from working";
+	} else {
+		document.getElementById('stereo').disabled = false;
+		delete document.getElementById('stereo').disabled;
+		document.getElementById('stereo').title = "Enable stereo 2.0 audio if available. Must be enabled on the viewer's end as well.";
+	}
+}
+
+function updateSVC(){
+	
+	var codecName = document.getElementById('codecGroupFlag').value;
+	var select = document.getElementById("svcGroupFlag");
+	var selectedValue = "0";
+	if (select.options && select.selectedIndex && select.options[select.selectedIndex]){
+		selectedValue = select.options[select.selectedIndex].value;
+	}
+	select.innerHTML = "";
+	
+	var option = document.createElement("option");
+	option.text = "🎦 SVC Off";
+	option.value = "0";
+	select.add(option);
+	select.selectedIndex = 0;
+	
+	if (svcLUT[codecName]){
+		svcLUT[codecName].forEach(opt=>{
+			option = document.createElement("option");
+			option.text = "🎦 "+opt;
+			option.value = opt;
+			select.add(option);
+			if (opt == selectedValue){
+				select.value = opt;
+			}
+		});
+	}
+}
+
+function gohere1t(){
+	if (document.getElementById('changeText1t').value){
+		localStorage.setItem('changeText1t', document.getElementById('changeText1t').value);
+		window.location = domain + "?whipoutvideobitrate=5800&stereo&push&whippush=https%3A%2F%2Fg.webrtc.live-video.net%3A4443%2Fv2%2Foffer&whippushtoken="+ document.getElementById('changeText1t').value;
+	}
+}
+
+function gohere2(){
+	if (document.getElementById('changeText2').value){
+		localStorage.setItem('changeText2', document.getElementById('changeText2').value);
+		window.location = domain + "?hidemenu&whip=" + document.getElementById('changeText2').value;
+	}
+}
+
+function gohere3(){
+	if (document.getElementById('changeText3').value){
+	
+		if (document.getElementById('changeText3').value.startsWith("http://vdo.ninja/")){
+			document.getElementById('changeText3').value = document.getElementById('changeText3').value.replace("http://vdo.ninja/","http://insecure.vdo.ninja/"); // a special exception for WHEP developers
+		}
+	
+		localStorage.setItem('changeText3', document.getElementById('changeText3').value);
+		localStorage.setItem('changeText3a', document.getElementById('changeText3a').value);
+		localStorage.setItem('whepbuffer', document.getElementById('whepbuffer').value);
+		localStorage.setItem('whepicewait', document.getElementById('whepicewait').value);
+		localStorage.setItem('e2eeGroupFlag2', document.getElementById('e2eeGroupFlag2').value);
+		localStorage.setItem('stereowhep', document.getElementById('stereowhep').value);
+		
+		
+		var addedon = "";
+		if (parseInt(document.getElementById('whepbuffer').value)){
+			addedon += "&buffer="+document.getElementById('whepbuffer').value;
+		}
+		
+		if (parseInt(document.getElementById('e2eeGroupFlag2').value)){
+			addedon += "&e2ee&password";
+		}
+		if (parseInt(document.getElementById('stereowhep').value)){
+			addedon += "&stereo=2";  // viewer side only; stereo=1 will do both ways
+		} else {
+			addedon += "&mono";
+		}
+		
+		if (document.getElementById('changeText3a').value){
+			addedon += "&whepplaytoken="+document.getElementById('changeText3a').value;
+		}
+		
+		addedon += "&whepwait="+document.getElementById('whepicewait').value;
+		
+		window.location = domain + "?&hidemenu&whepplay=" + encodeURIComponent(document.getElementById('changeText3').value)+addedon;
+	}
+}
+
+function change4(){
+	document.getElementById('whepoutid').innerText = document.getElementById('changeText4').value;
+	document.getElementById('whepoutsrc').href = "https://whep.vdo.ninja/"+document.getElementById('changeText4').value;
+	
+	
+}
+
+function gohere4(){
+	if (document.getElementById('changeText4').value){  // document.getElementById('changeText4').value
+		localStorage.setItem('changeText4', document.getElementById('changeText4').value);
+		document.getElementById('whepoutid').innerText = document.getElementById('changeText4').value;
+		document.getElementById('whepoutsrc').href = "https://whep.vdo.ninja/"+document.getElementById('changeText4').value;
+		var addedon = "";
+		window.location = domain + "?push=" + encodeURIComponent(document.getElementById('changeText4').value)+"&whepout=" + encodeURIComponent(document.getElementById('changeText4').value)+addedon;
+	}
+}
+
+function resetHistory(){
+	localStorage.clear();
+	document.querySelector("#changeText1").value = "";
+	document.querySelector("#changeText1a").value = "";
+	document.querySelector("#changeText2").value = "";
+	document.querySelector("#changeText3").value = "";
+	document.querySelector("#changeText1t").value = "";
+	checkStereo();
+}
+
+(function (w) {
+    w.URLSearchParams = w.URLSearchParams || function (searchString) {
+        var self = this;
+        self.searchString = searchString;
+        self.get = function (name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(self.searchString);
+            if (results == null) {
+                return null;
+            }
+            else {
+                return decodeURI(results[1]) || 0;
+            }
+        };
+    }
+
+})(window)
+
+var urlParams = new URLSearchParams(window.location.search);
+
+function enterPressed(event, callback){
+  if (event.keyCode === 13){ // Number 13 is the "Enter" key on the keyboard
+    event.preventDefault(); // Cancel the default action, if needed
+    callback();
+  }
+}
+
+checkStereo();
+
+var isMobile = false;
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){ // does not detect iPad Pros.
+	isMobile=true; // if iOS, default to H264?  meh.  let's not.
+}
+var Firefox = navigator.userAgent.indexOf("Firefox")>=0;
+if (Firefox){
+	Firefox = parseInt(navigator.userAgent.split("irefox/").pop()) || true;
+} 
+
+var capabilityType = Firefox ? "transmission" : "webrtc";
+var codecs = RTCRtpSender.getCapabilities('video').codecs;
+var svcLUT = {};
+var svcDefault = {};
+
+function getCommonValues(obj) {
+	if (obj.default){
+		delete obj.default;
+	}
+	let commonValues = [];
+	let firstKey = Object.keys(obj)[0];
+	let firstArray = obj[firstKey];
+	for (let i = 0; i < firstArray.length; i++) {
+		let currentValue = firstArray[i];
+		let isCommonValue = true;
+		for (let key in obj) {
+			if (!obj[key].includes(currentValue)) {
+			isCommonValue = false;
+			break;
+			}
+		}
+		if (isCommonValue) {
+			commonValues.push(currentValue);
+		}
+	}
+	return commonValues
+}
+
+async function processCodecs(){
+	await codecs.forEach(async codec => {
+		try {
+			var codecName = codec.mimeType.replace("video/","").toLowerCase();
+			if (['video/red', 'video/ulpfec', 'video/rtx'].includes(codec.mimeType)) {
+				return;
+			} else if (svcLUT[codecName]){ // already done
+				return;
+			}
+			
+			svcLUT[codecName] = [];
+			var capabilityPromises = [];
+			for (const mode of scalabilityModes) {
+				capabilityPromises.push(navigator.mediaCapabilities.encodingInfo({
+					type: capabilityType,
+					video: {
+						contentType: codec.mimeType,
+						width: 1920,
+						height: 1080,
+						bitrate: 10000,
+						framerate: 29.97,
+						scalabilityMode: mode
+					}
+				}));
+			}
+			var capabilityResults = await Promise.all(capabilityPromises);
+			for (var i = 0;i<capabilityResults.length;i++){
+				if (capabilityResults[i].supported){
+					svcLUT[codecName].push(scalabilityModes[i]);
+				}
+			}
+			
+			svcLUT['default'] = getCommonValues(svcLUT);
+			updateSVC();
+		} catch(e){
+			console.error(e);
+		}
+	});
+	console.log("available codecs");
+	console.log(svcLUT);
+
+	
+}
+if (codecs){
+	var av1found = false;
+	codecs.forEach(c =>{
+		if (c.mimeType.toLowerCase().includes("av1")){
+			av1found = true;
+		}
+	})
+	if (!av1found){
+		document.getElementById("av1codec").disabled = true;
+		document.getElementById("av1codec").title = "Not found on your system";
+	} else if (localStorage.getItem('codecGroupFlag')===null){
+		document.getElementById('codecGroupFlag').value = "av1";
+	}
+	processCodecs();
+	
+}
+
+</script>
+</body>
+</html>

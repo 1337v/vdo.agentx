@@ -12,9 +12,8 @@ For those looking for a brand-free experience already with a different domain na
 
 - https://invite.cam (via URL obfuscation option)
 - https://backup.vdo.ninja (fully backup hosted)
-- https://rtc.ninja (de-branded version of vdo.ninja)
 
-There's also the Github-hosted version, which mirrors the master branch of the code repo. https://steveseguin.github.io/vdo.ninja/  You can use this hosted version or fork VDO.Ninja and host it yourself in the same way via Github Pages; it's free and can be done within minutes.
+There's also the Github-hosted version, which mirrors the master branch of the code repo. https://steveseguin.github.io/vdo.ninja/  You can use this hosted version or fork VDO.Ninja and host it yourself in the same way via Github Pages; it's free and can be done within minutes. I provide a video guide on how to do this here, https://www.youtube.com/watch?v=uYLKkX2_flY, and it's what I recommend for most users looking to deploy their own version of VDO.Ninja.
 
 For those wanting a private TURN server setup, you can load the settings for those via the URL parameters. If infrequently needing a private TURN, this is a great solution.  You can also use URL forwarding services to load up a customized link to VDO.Ninja, with URL parameters already included, such as https://invite.mypersonaldomain.com , which might secretly resolve to https://vdo.ninja/?room=myRoom&hash=3423&label or such.
 
@@ -26,13 +25,21 @@ Understanding clearly why you need to deploy any code or server is important. Ma
 
 That all aside, please continue for instructions for hosting on your own webserver, turn relay server, and more.
 
-### Deplying website on an NGINX web server
+### Deploy to GitHub pages: the quick and simple method
 
-There's a community-created video tutorial on setting up here; https://youtu.be/8sDMwBIlgwE  Otherwise, read on.
+For a very simple method on how to deploy VDO.Ninja, there's a detailed video guide here: https://www.youtube.com/watch?v=uYLKkX2_flY 
 
-I use Cloudflare with Flexible SSL enabled and HTTP Rewrites. If you do not use Cloudflare, you will need to deploy SSL certificates onto your website.  You will also have to have Cloudflare or whatever DNS provider you have, point your domain name to the IP address of your webserver. VDO.Ninja REQUIRES a domain name and SSL, unless you modify all  browsers being used to support otherwise. (More on this in the [Internet-free section](#internet-free-deployments) below)
+Most users might find the Github Pages deployment option easiest and quickest. 
 
-For webservers, I use NGINX on a Ubuntu server; smaller the better. I rely on Cloudflare to provide caching and SSL, so my installation of NGINX is pretty simple. 
+### Deploying to a NGINX web server
+
+For advanced users, NGINX might be more appropriate than using Github Pages, so find written directions below. There's also a community-created video tutorial on setting up on AWS + Nginx here; https://youtu.be/8sDMwBIlgwE, but it's not an official install guide.
+
+Please consider the below directions just loose guidelines; you may need to change things up depending on factors like firewalls, operating system versions, and other factors.  This NGINX install guide makes some assumptions that you know the basics of NGINX, running Linux servers, domain name setup, and code deployments. Most users getting stuck do because of the SSL requirement, or because of overly complicated firewall/VPS setups.
+
+Please note, VDO.Ninja REQUIRES a domain name and SSL, unless you modify all browsers being used to support otherwise. (More on this in the [Internet-free section](#internet-free-deployments) below)  As a result, getting VDO.Ninja working can be quite challenging, as setting up domain names and SSL can be tricky for some. 
+
+The following commands will setup NGINX, assuming you are running on a standard Ubuntu server. 
 ```
 sudo apt-get update 
 apt-get install nginx -y
@@ -40,7 +47,15 @@ sudo vi /etc/nginx/sites-available/default
 sudo systemctl restart nginx
 ```
 
-An example NGINX config file that "hides" the file extensions is as follows.  Update the file as needed and 
+If you need to download the code for VDO.Ninja, the basic idea is something like this:
+
+```
+sudo apt-get install git -y
+cd /var/www/html
+git clone https://github.com/steveseguin/vdo.ninja
+```
+
+To keep things easy, Steve generally recommends using Cloudflare to provide caching and SSL, but you can google `Certbot` for another free SSL option. The below NGINX config assumes you are using Cloudflare's flexible SSL option, which is the simpliest way to get started.  You'll need to also add the VDO.Ninja code to the /var/www/html/vdo.ninja folder (or whatever you set it to) and modify the port/SSL/domain-name settings as needed.
 
 ```server {
         listen 80;
@@ -67,22 +82,28 @@ An example NGINX config file that "hides" the file extensions is as follows.  Up
         }
 }
 ```
-You'll want to deploy (copy/clone) the GitHub VDO.Ninja files into your NGINX web folder, that is specified in your NGINX config file. Update the NGINX config file to match your domain and and folder, etc. Restart NGINX after.
+
+`sudo systemctl reload nginx` will reload the settings after making changes.
+
+At this point, if you've managed to make it this far, you should have VDO.Ninja's web code hosted and accessible via your domain name.
+
+You can find many settings for VDO.Ninja at the bottom of the `index.html` file, including settings for specifiying TURN servers and default values.
+
 
 ### Deploying your own media relay TURN Server
 
-As for the TURN relay server, it can run on a single or dual-core computer. It doesn't take much to host many users -- it mainly just needs a good internet connection.  Most users will not need a TURN server, but since VDO.Ninja handles many different types of users, the TURN server is there as a failsafe for those occasional problem users. I'm assuming you know why you need and want a TURN server -- if not, you may not actually need one.
+As for the TURN relay server, a basic one can run on a single or dual-core computer; 2GB of RAM or more recommended though. It doesn't take much of a server to host a few users -- it mainly just needs a good internet connection.  Most users will not need a TURN server, but since VDO.Ninja handles many different types of users, the TURN server is there as a failsafe for those occasional problem users. I'm assuming you know why you need and want a TURN server -- if not, you may not actually need one.
 
 A guide and sample config file for the turn server is here:
 https://github.com/steveseguin/vdo.ninja/blob/master/turnserver.md
 
-If deploying to GCP or AWS, you might need to make some tweaks to the IP address values to include the internet local IP as well as the external. Please see online guides no setting up a TURN server for your particular setup. Setups will vary.
+If deploying to GCP or AWS, you might need to make some tweaks to the IP address values to include the internet local IP as well as the external. Please see online guides no setting up a TURN server for your particular setup. Setups will vary, especially if you need a TURN server that has TLS, IPv6 support, or token-based auth support.
 
-Once you have your TURN server setup, you can update the index.html of the VDO.Ninja code. Nightly or official releases should be fine to pull. You probably will want to uncomment the lines linked below once deployed, adjusting the default values to your liking and updating the server location address and credentials of your TURN server (if you deployed one that is).  Unless your TURN server also provides STUN capabilities, you may want to also use the Google STUN servers, so uncomment that stuff too.  
+Once you have your TURN server setup, you can update the index.html of the VDO.Ninja code (near the bottom) with your TURN/STUN settings.
 
 https://github.com/steveseguin/vdo.ninja/blob/df6c147311b9e7d19659ddbb1799d6598f59aa0d/index.html#L644
 
-Also note: There are third-party providers offering TURN services, if you would like a managed third party provider, although they are often quite expensive.
+Also note: There are third-party providers offering TURN services, if you would like a managed third party provider, although they are often quite expensive. Some example code on using Twillio as a TURN provider, with auth logic, can be found in the main.js file. 
 
 ### Further customization of the website code
 
@@ -92,13 +113,22 @@ My suggestion to extensive editing? Limit changes to images and perhaps the tran
 
 ### Internet-free deployments 
 
-For those looking to deploy a completely Internet-free or fully-isolated hosting option, you'll need to deploy your own handshake server, and you may also need to deploy your own STUN/TURN service. STUN/TURN might not be needed on a Local Area Network, and TURN might not be needed at all if you have control over each participant connecting, but adding one isn't too hard and can help with firewall and mobile network issues.
+For those looking to deploy a completely Internet-free or fully-isolated hosting option, you'll need to deploy your own handshake server. You may not need to deploy a TURN / STUN server if using things just on a LAN.
 
-As of this writing, VDO.Ninja uses Google's public STUN servers, but most TURN-servers also offer optional STUN server functionality as well. Details on deploying a TURN server are mentioned previously in this article, so following those instructions should suffice if you wish to have a combined STUN/TURN service.
+I've created an install script, and also am providing a Raspberry Pi image, for those looking for a simple working example of how to do it all.
+See it here: https://github.com/steveseguin/offline_deployment
+
+Note, if doing things yourself, since you will be using a private handshake server, don't forget that you'll need to specify that in the VDO.Ninja index.html file.
+
+Lastly, SSL self-signed certificates will be a haunting issue for those not experienced. See below for a bit of direction on options there.
 
 #### Dealing with no SSL scenarios
 
-Internet-free deployments will also need to deal with private SSL certificates and any DNS secure context issues that may arise. VDO.Ninja relies on SSL for security, but if you can't figure out how to do private SSL issuance, these SSL restrictions can be somewhat disabled at the browser's command-line or for localhost via the Chrome://flags settings. VDO.Ninja may complain about the lack of security if you take this approach though, but you can edit out those lines of code which trigger those warnings as needed. You may still need to issue an SSL certificate, self-signed or what not, but with these flags enabled it doesn't at least need to be valid.
+Internet-free deployments will also need to deal with private SSL certificates and any DNS secure context issues that may arise. VDO.Ninja relies on SSL for security, but without Internet, you'll need to create and use a private ceriticate that get added to your system's trusted certificate key chain.
+
+On Mac, you open the Keychain Access and add the cert to the Certificates section, allowing it always. It's a bit more work on PC, but Google is your friend there. There's also plenty of guides on using openssl to create a self-signed certiificates als.
+
+If you can't figure out how to do private SSL issuance, these SSL restrictions can be somewhat disabled at the browser's command-line or for localhost via the Chrome://flags settings. VDO.Ninja may complain about the lack of security if you take this approach though, but you can edit out those lines of code which trigger those warnings as needed. You may still need to issue an SSL certificate, self-signed or what not, but with these flags enabled it doesn't at least need to be valid.
 
 Setting it via command line on Windows,
 ```
@@ -112,6 +142,8 @@ and if you intend to only access it as a localhost,
 ```
 chrome://flags/#allow-insecure-localhost
 ```
+
+
 ### Hand-shake server deployment
 
 Finally, there is a handshake server hosting option available; advanced users can host their own personal handshake server, which is useful for air-gapped private deployments of the service. Some basic documentation with instructions on setting it up are included here: https://github.com/steveseguin/websocket_server.  Just be sure that your SSL-certifcates are valid or that you modify your browser to support invalid SSL certificates, else it will not work. From there, you just need to modify a couple ilnes in the index.html file of VDO.Ninja to configure things.

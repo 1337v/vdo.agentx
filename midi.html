@@ -107,12 +107,16 @@
 			<h2>About</h2>
 			<div>
 				You can check the console debug logs for added of input/output events and device details.
-				<br /><br />You can download a virtual MIDI I/O controller for windwos here:<br />
+				<br /><br />You can download a virtual MIDI I/O controller for Windows here:<br />
 				http://www.tobias-erichsen.de/software/loopmidi.html
 				<br /><br />This code uses the WebMIDI.js library, referenced here:<br />
 				https://github.com/djipco/webmidi
 				<br /><br />
 				Below you can test the <a href="https://docs.vdo.ninja/general-settings/midi">MIDI hotkey commands</a> for VDO.Ninja below:<br />
+				<br /><br />
+				The idea of this app is to select a MIDI output loopback device. Pressing any of the below buttons will trigger the respective MIDI note/command, sending it to the output MIDI device. 
+				Since the MIDI output device should be a loopback device, you can select the MIDI loopback device in VDO.Ninja as its MIDI input source.
+				<br /><br />Refer to the documentation for what a MIDI note/value does in VDO.Ninja, but it can be used to control the director's room, either locally or remotely.
 			</div>
 		</div>
 		<div class="card">
@@ -285,7 +289,7 @@ WebMidi.enable(function (err) {
 	
 	var button = document.createElement("button");
 	button.innerHTML = "Note G3; Chat";
-	button.onclick = function(){output.playNote("G3");};  // "speaker" also works in the same way.
+	button.onclick = function(){console.log("G3");output.playNote("G3");};  // "speaker" also works in the same way.
 	container.appendChild(button);
 	
 	var button = document.createElement("button");
